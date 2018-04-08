@@ -83,10 +83,14 @@
     let gameloop;
 
     const drawSnake = (x, y) => {
-      ctx.fillStyle = 'green';
-      ctx.fillRect(x*snakeSize, y*snakeSize, snakeSize-2, snakeSize-2);
+      const radius = snakeSize/2;
+      ctx.beginPath();
+      ctx.arc(x*snakeSize+radius, y*snakeSize+radius,radius, 0, 2*Math.PI, false);
+      ctx.fillStyle = '#76bd07';
+      ctx.fill();
       ctx.strokeStyle = 'white';
-      ctx.strokeRect(x*snakeSize, y*snakeSize, snakeSize, snakeSize);
+      ctx.stroke();
+      //ctx.strokeRect(x*snakeSize, y*snakeSize, snakeSize, snakeSize);
     }
   
     const drawFood = (x, y) => {
