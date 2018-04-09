@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Snake",
 	"description": "Play Snake right on your screen.",
-	"version": "2.4",
+	"version": "2.5",
 	"icons": {
 		"32": "icons/icon_32.png",
 		"48": "icons/icon_48.png",

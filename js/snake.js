@@ -49,6 +49,7 @@
     z-index: 9999;
     background: rgba(255,255,255, 0.3);
   `;
+  const initialMsg = 'Click to get started!';
   const startMsg = 'Hit spacebar to play/pause';
   const gameOverMsg = 'Ohhh! your snake got hurt, hit enter to restart';
   const mycanvas = document.createElement('canvas');
@@ -62,7 +63,7 @@
   scoreHeading.setAttribute('id', 'tslsSnakeGameHeading');
   notification.style.cssText = notificationStyle;
   notification.setAttribute('id', 'tslsSnakeGameNotification');
-  notification.textContent = startMsg;
+  notification.textContent = initialMsg;
   document.body.appendChild(mycanvas);
   document.body.appendChild(scoreHeading)
   document.body.appendChild(notification)
@@ -77,6 +78,9 @@
   let score;
   let snake;
   let food;
+  notification.addEventListener('click', ()=>{
+    if(notification.textContent === initialMsg) notification.textContent = startMsg;
+  })
 
   const drawModule = (function () {
     let ctx;
@@ -198,7 +202,7 @@
     }
   
     const init = context => {
-      notification.textContent = startMsg;
+      if(notification.textContent !== initialMsg) notification.textContent = startMsg;
       isDead = false;
       ctx = context;
       snakeDirection = 'right';
@@ -245,6 +249,7 @@
 drawModule.init(context);
 
 function keyEvents(event) {
+  if(!document.getElementById('tslsSnakeGameCanvas')) return false;
   event.preventDefault();
   const { keyCode } = event;
   if(keyCode === 32) {
