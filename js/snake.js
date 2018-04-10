@@ -96,7 +96,7 @@
       ctx.stroke();
       //ctx.strokeRect(x*snakeSize, y*snakeSize, snakeSize, snakeSize);
     }
-  
+
     const drawFood = (x, y) => {
       ctx.fillStyle = 'yellow';
       const radius = snakeSize/2;
@@ -110,7 +110,7 @@
       ctx.fill();
       //ctx.fillRect(x*snakeSize+1, y*snakeSize+1, snakeSize-2, snakeSize-2);
     }
-  
+
     const drawScore = function() {
       scoreHeading.textContent = score
       //level settings
@@ -120,24 +120,24 @@
       if(score == 50) start(40)
       if(score == 70) start(30)
     }
-  
+
     const createFood = function() {
       food = {
         x: Math.floor((Math.random() * maxX) + 1),
         y: Math.floor((Math.random() * maxY) + 1)
       }
-  
+
       for (let i=0; i>snake.length; i++) {
         const snakeX = snake[i].x;
         const snakeY = snake[i].y;
-      
+
         if (food.x===snakeX && food.y === snakeY || food.y === snakeY && food.x===snakeX) {
           food.x = Math.floor((Math.random() * maxX) + 1);
           food.y = Math.floor((Math.random() * maxY) + 1);
         }
       }
     }
-  
+
     const initializeSnake = function() {
         snake = [];
         score = 0;
@@ -145,22 +145,22 @@
             snake.push({x:i, y:0});
         }
     }
-      
+
     const paint = function(){
         //ctx.fillStyle = 'transparent';
         try{ctx.clearRect(0, 0, w, h)}catch(e){}
         ctx.rect(0, 0, w, h);
-        
+
         let snakeX = snake[0].x;
         let snakeY = snake[0].y;
-  
-        if (snakeDirection == 'right') { 
+
+        if (snakeDirection == 'right') {
           snakeX++; }
-        else if (snakeDirection == 'left') { 
+        else if (snakeDirection == 'left') {
           snakeX--; }
-        else if (snakeDirection == 'up') { 
-          snakeY--; 
-        } else if(snakeDirection == 'down') { 
+        else if (snakeDirection == 'up') {
+          snakeY--;
+        } else if(snakeDirection == 'down') {
           snakeY++; }
         if (snakeX == -1 || snakeX == w/snakeSize || snakeY == -1 || snakeY == h/snakeSize || checkCollision(snakeX, snakeY, snake)) {
             //Stop game
@@ -173,11 +173,11 @@
         if(snakeX == food.x && snakeY == food.y) {
           tail = {x: snakeX, y: snakeY}; //Create a new head instead of moving the tail
           score ++;
-          
+
           createFood(); //Create new food
         } else {
           tail = snake.pop(); //pops out the last cell
-          tail.x = snakeX; 
+          tail.x = snakeX;
           tail.y = snakeY;
         }
         //The snake can now eat the food.
@@ -185,22 +185,22 @@
 
         for(let i = 0; i < snake.length; i++) {
           drawSnake(snake[i].x, snake[i].y);
-        } 
-        
-        drawFood(food.x, food.y); 
+        }
+
+        drawFood(food.x, food.y);
         drawScore();
     }
-  
+
     const checkCollision = function(x, y, array) {
         for(let i = 0; i < array.length; i++) {
           if(array[i].x === x && array[i].y === y) {
             return true;
           }
-          
-        } 
+
+        }
         return false;
     }
-  
+
     const init = context => {
       if(notification.textContent !== initialMsg) notification.textContent = startMsg;
       isDead = false;
@@ -211,34 +211,35 @@
       createFood();
       paint();
     }
-  
+
     const pause = () => {
       if(isPaused || isDead) return false;
       try{clearInterval(gameloop);}catch(e){}
       notification.style.display = 'block';
       gameloop = false;
       isPaused= true;
-  
+
     }
-  
+
     const resume = () => {
       if(!isPaused || isDead) return false;
+      if (notification.textContent !== startMsg) notification.textContent = startMsg;
       notification.style.display = 'none';
       isPaused= false;
       start(80);
     }
-  
+
     const start = speed => {
       if(gameloop) {
         try {
           clearInterval(gameloop);
           gameloop = false;
-        }catch(e) {}  
+        }catch(e) {}
       }
       gameloop = setInterval(paint, speed);
     }
-  
-  
+
+
     return {
       init : init,
       pause: pause,
@@ -263,8 +264,8 @@ function keyEvents(event) {
 
   if(isPaused) return false;
   switch(keyCode) {
-    
-    case 37: 
+
+    case 37:
       if (snakeDirection != 'right')  snakeDirection = 'left';
       break;
 
